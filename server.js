@@ -6,10 +6,6 @@ app.use(express.json());
 //const PORT = 3000;
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
-
 // Línea 9 corregida:
 app.get("/worldCup", (req, res) => {
     res.status(200).json({
@@ -66,17 +62,29 @@ app.post("/worldCup/createTeams", (req, res) => {
         });
     }
 
-    const teams = [];
 
-    const teamExists = teams.some(team => team.id === id);
 
-    if (teamExists) {
-        return res.status(409).json({
-            message: "El equipo a registrar ya existe"
-        });
-    }
-    
-    const sql = `
+
+
+
+    db.get(
+    "SELECT * FROM teams WHERE id = ?",
+    [id],
+    (error, row) => {
+
+        if (error) {
+            return res.status(500).json({
+                message: error.message
+            });
+        }
+
+        if (row) {
+            return res.status(409).json({
+                message: "El equipo a registrar ya existe"
+            });
+        }
+
+        const sql = `
         INSERT INTO teams
         (
             id,
@@ -111,6 +119,8 @@ app.post("/worldCup/createTeams", (req, res) => {
 
         }
     );
+    }
+);
 
 });
 
