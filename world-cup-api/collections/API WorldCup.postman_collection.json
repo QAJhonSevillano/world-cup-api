@@ -1,0 +1,1364 @@
+{
+  "info": {
+    "_postman_id": "81c5639b-6bcf-42d2-aa99-7b0e44b43a81",
+    "name": "API WorldCup",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "25317821"
+  },
+  "item": [
+    {
+      "name": "CasosDePrueba",
+      "item": [
+        {
+          "name": "findTeamById",
+          "item": [
+            {
+              "name": "CP1 - Exitoso",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "/**\r",
+                      " * ==========================================================\r",
+                      " * TESTS - GET /worldCup/teamsById/{id}\r",
+                      " * Validación de información de equipo por ID\r",
+                      " * ==========================================================\r",
+                      " */\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Parseo de la respuesta\r",
+                      "// ==========================================\r",
+                      "const response = pm.response.json();\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Configuración de campos obligatorios\r",
+                      "// ==========================================\r",
+                      "const requiredFields = [\r",
+                      "    \"id\",\r",
+                      "    \"teamName\",\r",
+                      "    \"continentName\",\r",
+                      "    \"rankingFifa\",\r",
+                      "    \"worldCupGroup\"\r",
+                      "];\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del código de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Status Code debe ser 200 OK\", () => {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del tiempo de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Tiempo de respuesta menor a 1500 ms\", () => {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación de estructura JSON\r",
+                      "// ==========================================\r",
+                      "pm.test(\"La respuesta debe ser un objeto JSON válido\", () => {\r",
+                      "    pm.expect(response).to.be.an(\"object\");\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación de existencia de campos\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Todos los campos obligatorios deben existir\", () => {\r",
+                      "    requiredFields.forEach(field => {\r",
+                      "        pm.expect(\r",
+                      "            response,\r",
+                      "            `El campo '${field}' no existe en la respuesta`\r",
+                      "        ).to.have.property(field);\r",
+                      "    });\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación de tipos de datos\r",
+                      "// ==========================================\r",
+                      "pm.test(\"El campo 'id' debe ser numérico\", () => {\r",
+                      "    pm.expect(response.id).to.be.a(\"number\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"El campo 'teamName' debe ser string\", () => {\r",
+                      "    pm.expect(response.teamName).to.be.a(\"string\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"El campo 'continentName' debe ser string\", () => {\r",
+                      "    pm.expect(response.continentName).to.be.a(\"string\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"El campo 'rankingFifa' debe ser numérico\", () => {\r",
+                      "    pm.expect(response.rankingFifa).to.be.a(\"number\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"El campo 'worldCupGroup' debe ser string\", () => {\r",
+                      "    pm.expect(response.worldCupGroup).to.be.a(\"string\");\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación de valores nulos o vacíos\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Los campos obligatorios no deben ser nulos ni vacíos\", () => {\r",
+                      "\r",
+                      "    requiredFields.forEach(field => {\r",
+                      "\r",
+                      "        pm.expect(\r",
+                      "            response[field],\r",
+                      "            `El campo '${field}' es nulo`\r",
+                      "        ).to.not.equal(null);\r",
+                      "\r",
+                      "        pm.expect(\r",
+                      "            response[field],\r",
+                      "            `El campo '${field}' es undefined`\r",
+                      "        ).to.not.equal(undefined);\r",
+                      "\r",
+                      "        // Validación específica para strings\r",
+                      "        if (typeof response[field] === \"string\") {\r",
+                      "            pm.expect(\r",
+                      "                response[field].trim(),\r",
+                      "                `El campo '${field}' está vacío`\r",
+                      "            ).to.not.equal(\"\");\r",
+                      "        }\r",
+                      "    });\r",
+                      "\r",
+                      "});\r",
+                      "\r",
+                      "//Continuar con el CP2 - idVacio\r",
+                      "pm.execution.setNextRequest(\"CP2 - idVacío\");"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}/worldCup/teamsById/2",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "worldCup",
+                    "teamsById",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CP2 - idVacío",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "/**\r",
+                      " * ==========================================================\r",
+                      " * TESTS - GET /worldCup/teamsById/{id}\r",
+                      " * Validación de información de equipo por ID\r",
+                      " * ==========================================================\r",
+                      " */\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Parseo de la respuesta\r",
+                      "// ==========================================\r",
+                      "const response = pm.response.json();\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Configuración de campos obligatorios\r",
+                      "// ==========================================\r",
+                      "const requiredFields = [\r",
+                      "    \"id\",\r",
+                      "    \"teamName\",\r",
+                      "    \"continentName\",\r",
+                      "    \"rankingFifa\",\r",
+                      "    \"worldCupGroup\"\r",
+                      "];\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del código de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Status Code debe ser 404 OK\", () => {\r",
+                      "    pm.response.to.have.status(404);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del mensaje de respuesta\r",
+                      "// ==========================================\r",
+                      "\r",
+                      "pm.test(\"El mensaje es correcto\", function () {    \r",
+                      "    const jsonData = pm.response.json();    \r",
+                      "    pm.expect(jsonData.message).to.eql(\"Equipo no encontrado\");\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del tiempo de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Tiempo de respuesta menor a 3000 ms\", () => {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación de estructura JSON\r",
+                      "// ==========================================\r",
+                      "pm.test(\"La respuesta debe ser un objeto JSON válido\", () => {\r",
+                      "    pm.expect(response).to.be.an(\"object\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.execution.setNextRequest(\"CP3 - Exitoso\");"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}/worldCup/teamsById/1000",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "worldCup",
+                    "teamsById",
+                    "1000"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "findAllTeams",
+          "item": [
+            {
+              "name": "CP3 - Exitoso",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "/**",
+                      " * ==========================================================",
+                      " * TESTS - GET /worldCup/allTeams",
+                      " * Validación de información de todos los equipos",
+                      " * ==========================================================",
+                      " */",
+                      "",
+                      "// ==========================================",
+                      "// Guard: verificar que la respuesta es JSON válido",
+                      "// ==========================================",
+                      "let response;",
+                      "try {",
+                      "    response = pm.response.json();",
+                      "} catch (e) {",
+                      "    pm.test(\"La respuesta debe ser JSON válido\", () => {",
+                      "        pm.expect.fail(\"La respuesta no es JSON válido: \" + e.message);",
+                      "    });",
+                      "    pm.execution.setNextRequest(null);",
+                      "    return;",
+                      "}",
+                      "",
+                      "// ==========================================",
+                      "// Configuración de campos obligatorios",
+                      "// ==========================================",
+                      "const requiredFields = [",
+                      "    \"id\",",
+                      "    \"teamName\",",
+                      "    \"continentName\",",
+                      "    \"rankingFifa\",",
+                      "    \"worldCupGroup\"",
+                      "];",
+                      "",
+                      "// ==========================================",
+                      "// Validación del código de respuesta",
+                      "// ==========================================",
+                      "pm.test(\"Status Code debe ser 200 OK\", () => {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "// ==========================================",
+                      "// Validación del tiempo de respuesta",
+                      "// ==========================================",
+                      "pm.test(\"Tiempo de respuesta menor a 8000 ms\", () => {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(8000);",
+                      "});",
+                      "",
+                      "// ==========================================",
+                      "// Validación de estructura JSON: debe ser un array",
+                      "// ==========================================",
+                      "pm.test(\"La respuesta debe ser un array JSON válido\", () => {",
+                      "    pm.expect(response).to.be.an(\"array\");",
+                      "});",
+                      "",
+                      "// ==========================================",
+                      "// Validación de que el array no esté vacío",
+                      "// ==========================================",
+                      "pm.test(\"El array de equipos no debe estar vacío\", () => {",
+                      "    pm.expect(response.length).to.be.above(0);",
+                      "});",
+                      "",
+                      "// ==========================================",
+                      "// Validación de existencia de campos en cada elemento",
+                      "// ==========================================",
+                      "pm.test(\"Todos los campos obligatorios deben existir en cada equipo\", function () {",
+                      "    var missingFields = [];",
+                      "    response.forEach(function (team, index) {",
+                      "        requiredFields.forEach(function (field) {",
+                      "            if (!team.hasOwnProperty(field)) {",
+                      "                var teamId = team.id !== undefined ? team.id : \"?\";",
+                      "                missingFields.push(",
+                      "                    \"Equipo[\" + index + \"] (id=\" + teamId + \"): falta '\" + field + \"'\"",
+                      "                );",
+                      "            }",
+                      "        });",
+                      "    });",
+                      "",
+                      "    pm.expect(",
+                      "        missingFields,",
+                      "        \"Campos faltantes:\\n\" + missingFields.join(\"\\n\")",
+                      "    ).to.be.empty;",
+                      "});",
+                      "",
+                      "// ==========================================",
+                      "// Validación de tipos de datos en cada elemento",
+                      "// ==========================================",
+                      "pm.test(\"El campo 'id' debe ser numérico en cada equipo\", function () {",
+                      "    var errors = [];",
+                      "    response.forEach(function (team, index) {",
+                      "        if (typeof team.id !== \"number\") {",
+                      "            errors.push(",
+                      "                \"Equipo[\" + index + \"]: 'id' es \" +",
+                      "                typeof team.id +",
+                      "                \" (valor: \" + team.id + \")\"",
+                      "            );",
+                      "        }",
+                      "    });",
+                      "    pm.expect(",
+                      "        errors,",
+                      "        errors.join(\"\\n\")",
+                      "    ).to.be.empty;",
+                      "});",
+                      "",
+                      "",
+                      "",
+                      "pm.test(\"El campo 'teamName' debe ser string en cada equipo\", () => {",
+                      "    const errors = [];",
+                      "    response.forEach((team, index) => {",
+                      "        if (typeof team.teamName !== \"string\") {",
+                      "            errors.push(`Equipo[${index}]: 'teamName' es ${typeof team.teamName}`);",
+                      "        }",
+                      "    });",
+                      "    if (errors.length > 0) pm.expect.fail(errors.join(\"\\n\"));",
+                      "});",
+                      "",
+                      "pm.test(\"El campo 'continentName' debe ser string en cada equipo\", () => {",
+                      "    const errors = [];",
+                      "    response.forEach((team, index) => {",
+                      "        if (typeof team.continentName !== \"string\") {",
+                      "            errors.push(`Equipo[${index}]: 'continentName' es ${typeof team.continentName}`);",
+                      "        }",
+                      "    });",
+                      "    if (errors.length > 0) pm.expect.fail(errors.join(\"\\n\"));",
+                      "});",
+                      "",
+                      "pm.test(\"El campo 'rankingFifa' debe ser numérico en cada equipo\", () => {",
+                      "    const errors = [];",
+                      "    response.forEach((team, index) => {",
+                      "        if (typeof team.rankingFifa !== \"number\") {",
+                      "            errors.push(`Equipo[${index}]: 'rankingFifa' es ${typeof team.rankingFifa}`);",
+                      "        }",
+                      "    });",
+                      "    if (errors.length > 0) pm.expect.fail(errors.join(\"\\n\"));",
+                      "});",
+                      "",
+                      "pm.test(\"El campo 'worldCupGroup' debe ser string en cada equipo\", () => {",
+                      "    const errors = [];",
+                      "    response.forEach((team, index) => {",
+                      "        if (typeof team.worldCupGroup !== \"string\") {",
+                      "            errors.push(`Equipo[${index}]: 'worldCupGroup' es ${typeof team.worldCupGroup}`);",
+                      "        }",
+                      "    });",
+                      "    if (errors.length > 0) pm.expect.fail(errors.join(\"\\n\"));",
+                      "});",
+                      "",
+                      "// ==========================================",
+                      "// Validación de valores nulos o vacíos en cada elemento",
+                      "// ==========================================",
+                      "pm.test(\"Los campos obligatorios no deben ser nulos ni vacíos en ningún equipo\", () => {",
+                      "    const errors = [];",
+                      "    response.forEach((team, index) => {",
+                      "        requiredFields.forEach(field => {",
+                      "            const val = team[field];",
+                      "            if (val === null || val === undefined) {",
+                      "                errors.push(`Equipo[${index}] (id=${team.id ?? \"?\"}): '${field}' es ${val}`);",
+                      "            } else if (typeof val === \"string\" && val.trim() === \"\") {",
+                      "                errors.push(`Equipo[${index}] (id=${team.id ?? \"?\"}): '${field}' está vacío`);",
+                      "            }",
+                      "        });",
+                      "    });",
+                      "    if (errors.length > 0) pm.expect.fail(\"Valores nulos/vacíos:\\n\" + errors.join(\"\\n\"));",
+                      "});",
+                      "",
+                      "const maxId = Math.max(...response.map(team => team.id));",
+                      "const newId = maxId + 1;",
+                      "",
+                      "pm.collectionVariables.set(\"ultimotId\", maxId);",
+                      "pm.collectionVariables.set(\"nuevoId\", newId);",
+                      "",
+                      "console.log(\"ID máximo:\", maxId);",
+                      "console.log(\"Nuevo ID:\", newId);",
+                      "",
+                      "// Detener la ejecución del RUN",
+                      "//pm.execution.setNextRequest(null);",
+                      "pm.execution.setNextRequest(\"CP4 - idVacío\");"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}/worldCup/allTeams",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "worldCup",
+                    "allTeams"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "createTeam",
+          "item": [
+            {
+              "name": "CP4 - idVacío",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "/**\r",
+                      " * ==========================================================\r",
+                      " * TESTS - POST /worldCup/createTeams\r",
+                      " * Validación de información de la creación de equipos\r",
+                      " * ==========================================================\r",
+                      " */\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Parseo de la respuesta\r",
+                      "// ==========================================\r",
+                      "const response = pm.response.json();\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Configuración de campos obligatorios\r",
+                      "// ==========================================\r",
+                      "const requiredFields = [\r",
+                      "    \"id\",\r",
+                      "    \"teamName\",\r",
+                      "    \"continentName\",\r",
+                      "    \"rankingFifa\",\r",
+                      "    \"worldCupGroup\"\r",
+                      "];\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del código de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Status Code debe ser 400 - Bad Request\", () => {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del mensaje de respuesta\r",
+                      "// ==========================================\r",
+                      "\r",
+                      "pm.test(\"El mensaje es correcto\", function () {    \r",
+                      "    const jsonData = pm.response.json();    \r",
+                      "    pm.expect(jsonData.message).to.eql(\"El campo id es requerido\");\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del tiempo de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Tiempo de respuesta menor a 3000 ms\", () => {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación de estructura JSON\r",
+                      "// ==========================================\r",
+                      "pm.test(\"La respuesta debe ser un objeto JSON válido\", () => {\r",
+                      "    pm.expect(response).to.be.an(\"object\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.execution.setNextRequest(\"CP5 - teamNameVacío\");\r",
+                      "//pm.execution.setNextRequest(null);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"id\": \"\",\r\n    \"teamName\": \"{{$randomCountry}}\",\r\n    \"continentName\": \"{{federacionSeleccionada}}\",\r\n    \"rankingFifa\": \"{{rankingSeleccionado}}\",\r\n    \"worldCupGroup\": \"{{grupoSeleccionado}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/worldCup/createTeams",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "worldCup",
+                    "createTeams"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CP5 - teamNameVacío",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "/**\r",
+                      " * ==========================================================\r",
+                      " * TESTS - POST /worldCup/createTeams\r",
+                      " * Validación de información de la creación de equipos\r",
+                      " * ==========================================================\r",
+                      " */\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Parseo de la respuesta\r",
+                      "// ==========================================\r",
+                      "const response = pm.response.json();\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Configuración de campos obligatorios\r",
+                      "// ==========================================\r",
+                      "const requiredFields = [\r",
+                      "    \"id\",\r",
+                      "    \"teamName\",\r",
+                      "    \"continentName\",\r",
+                      "    \"rankingFifa\",\r",
+                      "    \"worldCupGroup\"\r",
+                      "];\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del código de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Status Code debe ser 400 - Bad Request\", () => {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del mensaje de respuesta\r",
+                      "// ==========================================\r",
+                      "\r",
+                      "pm.test(\"El mensaje es correcto\", function () {    \r",
+                      "    const jsonData = pm.response.json();    \r",
+                      "    pm.expect(jsonData.message).to.eql(\"El campo teamName es requerido\");\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del tiempo de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Tiempo de respuesta menor a 3000 ms\", () => {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación de estructura JSON\r",
+                      "// ==========================================\r",
+                      "pm.test(\"La respuesta debe ser un objeto JSON válido\", () => {\r",
+                      "    pm.expect(response).to.be.an(\"object\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.execution.setNextRequest(\"CP6 - continentNameVacío\");\r",
+                      "//pm.execution.setNextRequest(null);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"id\": {{nuevoId}},\r\n    \"teamName\": \"\",\r\n    \"continentName\": \"{{federacionSeleccionada}}\",\r\n    \"rankingFifa\": \"{{rankingSeleccionado}}\",\r\n    \"worldCupGroup\": \"{{grupoSeleccionado}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/worldCup/createTeams",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "worldCup",
+                    "createTeams"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CP6 - continentNameVacío",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "/**\r",
+                      " * ==========================================================\r",
+                      " * TESTS - POST /worldCup/createTeams\r",
+                      " * Validación de información de la creación de equipos\r",
+                      " * ==========================================================\r",
+                      " */\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Parseo de la respuesta\r",
+                      "// ==========================================\r",
+                      "const response = pm.response.json();\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Configuración de campos obligatorios\r",
+                      "// ==========================================\r",
+                      "const requiredFields = [\r",
+                      "    \"id\",\r",
+                      "    \"teamName\",\r",
+                      "    \"continentName\",\r",
+                      "    \"rankingFifa\",\r",
+                      "    \"worldCupGroup\"\r",
+                      "];\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del código de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Status Code debe ser 400 - Bad Request\", () => {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del mensaje de respuesta\r",
+                      "// ==========================================\r",
+                      "\r",
+                      "pm.test(\"El mensaje es correcto\", function () {    \r",
+                      "    const jsonData = pm.response.json();    \r",
+                      "    pm.expect(jsonData.message).to.eql(\"El campo continentName es requerido\");\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del tiempo de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Tiempo de respuesta menor a 3000 ms\", () => {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación de estructura JSON\r",
+                      "// ==========================================\r",
+                      "pm.test(\"La respuesta debe ser un objeto JSON válido\", () => {\r",
+                      "    pm.expect(response).to.be.an(\"object\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.execution.setNextRequest(\"CP7 - rankingFifaVacío\");\r",
+                      "//pm.execution.setNextRequest(null);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"id\": {{nuevoId}},\r\n    \"teamName\": \"{{$randomCountry}}\",\r\n    \"continentName\": \"\",\r\n    \"rankingFifa\": \"{{rankingSeleccionado}}\",\r\n    \"worldCupGroup\": \"{{grupoSeleccionado}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/worldCup/createTeams",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "worldCup",
+                    "createTeams"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CP7 - rankingFifaVacío",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "/**\r",
+                      " * ==========================================================\r",
+                      " * TESTS - POST /worldCup/createTeams\r",
+                      " * Validación de información de la creación de equipos\r",
+                      " * ==========================================================\r",
+                      " */\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Parseo de la respuesta\r",
+                      "// ==========================================\r",
+                      "const response = pm.response.json();\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Configuración de campos obligatorios\r",
+                      "// ==========================================\r",
+                      "const requiredFields = [\r",
+                      "    \"id\",\r",
+                      "    \"teamName\",\r",
+                      "    \"continentName\",\r",
+                      "    \"rankingFifa\",\r",
+                      "    \"worldCupGroup\"\r",
+                      "];\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del código de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Status Code debe ser 400 - Bad Request\", () => {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del mensaje de respuesta\r",
+                      "// ==========================================\r",
+                      "\r",
+                      "pm.test(\"El mensaje es correcto\", function () {    \r",
+                      "    const jsonData = pm.response.json();    \r",
+                      "    pm.expect(jsonData.message).to.eql(\"El campo rankingFifa es requerido\");\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del tiempo de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Tiempo de respuesta menor a 3000 ms\", () => {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación de estructura JSON\r",
+                      "// ==========================================\r",
+                      "pm.test(\"La respuesta debe ser un objeto JSON válido\", () => {\r",
+                      "    pm.expect(response).to.be.an(\"object\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.execution.setNextRequest(\"CP8 - worldCupGroupVacío\");\r",
+                      "//pm.execution.setNextRequest(null);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"id\": {{nuevoId}},\r\n    \"teamName\": \"{{$randomCountry}}\",\r\n    \"continentName\": \"{{federacionSeleccionada}}\",\r\n    \"rankingFifa\": \"\",\r\n    \"worldCupGroup\": \"{{grupoSeleccionado}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/worldCup/createTeams",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "worldCup",
+                    "createTeams"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CP8 - worldCupGroupVacío",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "/**\r",
+                      " * ==========================================================\r",
+                      " * TESTS - POST /worldCup/createTeams\r",
+                      " * Validación de información de la creación de equipos\r",
+                      " * ==========================================================\r",
+                      " */\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Parseo de la respuesta\r",
+                      "// ==========================================\r",
+                      "const response = pm.response.json();\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Configuración de campos obligatorios\r",
+                      "// ==========================================\r",
+                      "const requiredFields = [\r",
+                      "    \"id\",\r",
+                      "    \"teamName\",\r",
+                      "    \"continentName\",\r",
+                      "    \"rankingFifa\",\r",
+                      "    \"worldCupGroup\"\r",
+                      "];\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del código de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Status Code debe ser 400 - Bad Request\", () => {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del mensaje de respuesta\r",
+                      "// ==========================================\r",
+                      "\r",
+                      "pm.test(\"El mensaje es correcto\", function () {    \r",
+                      "    const jsonData = pm.response.json();    \r",
+                      "    pm.expect(jsonData.message).to.eql(\"El campo worldCupGroup es requerido\");\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del tiempo de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Tiempo de respuesta menor a 3000 ms\", () => {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación de estructura JSON\r",
+                      "// ==========================================\r",
+                      "pm.test(\"La respuesta debe ser un objeto JSON válido\", () => {\r",
+                      "    pm.expect(response).to.be.an(\"object\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.execution.setNextRequest(\"CP9 - teamExistente\");\r",
+                      "//pm.execution.setNextRequest(null);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"id\": {{nuevoId}},\r\n    \"teamName\": \"{{$randomCountry}}\",\r\n    \"continentName\": \"{{federacionSeleccionada}}\",\r\n    \"rankingFifa\": \"{{rankingSeleccionado}}\",\r\n    \"worldCupGroup\": \"\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/worldCup/createTeams",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "worldCup",
+                    "createTeams"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CP9 - teamExistente",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "/**\r",
+                      " * ==========================================================\r",
+                      " * TESTS - POST /worldCup/createTeams\r",
+                      " * Validación de información de la creación de equipos\r",
+                      " * ==========================================================\r",
+                      " */\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Parseo de la respuesta\r",
+                      "// ==========================================\r",
+                      "const response = pm.response.json();\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Configuración de campos obligatorios\r",
+                      "// ==========================================\r",
+                      "const requiredFields = [\r",
+                      "    \"id\",\r",
+                      "    \"teamName\",\r",
+                      "    \"continentName\",\r",
+                      "    \"rankingFifa\",\r",
+                      "    \"worldCupGroup\"\r",
+                      "];\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del código de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Status Code debe ser 409 - Bad Request\", () => {\r",
+                      "    pm.response.to.have.status(409);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del mensaje de respuesta\r",
+                      "// ==========================================\r",
+                      "\r",
+                      "pm.test(\"El mensaje es correcto - Conflict\", function () {    \r",
+                      "    const jsonData = pm.response.json();    \r",
+                      "    pm.expect(jsonData.message).to.eql(\"El equipo a registrar ya existe\");\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del tiempo de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Tiempo de respuesta menor a 3000 ms\", () => {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación de estructura JSON\r",
+                      "// ==========================================\r",
+                      "pm.test(\"La respuesta debe ser un objeto JSON válido\", () => {\r",
+                      "    pm.expect(response).to.be.an(\"object\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.execution.setNextRequest(\"CP10 - Exitoso\");\r",
+                      "//pm.execution.setNextRequest(null);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"id\": 8,\r\n    \"teamName\": \"Canada\",\r\n    \"continentName\": \"CONCACAF\",\r\n    \"rankingFifa\": 40,\r\n    \"worldCupGroup\": \"B\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/worldCup/createTeams",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "worldCup",
+                    "createTeams"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CP10 - Exitoso",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "/**\r",
+                      " * ==========================================================\r",
+                      " * TESTS - POST /worldCup/createTeams\r",
+                      " * Validación de información de la creación de equipos\r",
+                      " * ==========================================================\r",
+                      " */\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Parseo de la respuesta\r",
+                      "// ==========================================\r",
+                      "const response = pm.response.json();\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Configuración de campos obligatorios\r",
+                      "// ==========================================\r",
+                      "const requiredFields = [\r",
+                      "    \"id\",\r",
+                      "    \"teamName\",\r",
+                      "    \"continentName\",\r",
+                      "    \"rankingFifa\",\r",
+                      "    \"worldCupGroup\"\r",
+                      "];\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del código de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Status Code debe ser 201 - Creado\", () => {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del mensaje de respuesta\r",
+                      "// ==========================================\r",
+                      "\r",
+                      "pm.test(\"El mensaje es correcto \", function () {    \r",
+                      "    const jsonData = pm.response.json();    \r",
+                      "    pm.expect(jsonData.message).to.eql(\"Equipo creado satisfactoriamente\");\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación del tiempo de respuesta\r",
+                      "// ==========================================\r",
+                      "pm.test(\"Tiempo de respuesta menor a 3000 ms\", () => {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "// ==========================================\r",
+                      "// Validación de estructura JSON\r",
+                      "// ==========================================\r",
+                      "pm.test(\"La respuesta debe ser un objeto JSON válido\", () => {\r",
+                      "    pm.expect(response).to.be.an(\"object\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.execution.setNextRequest(null);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"id\": \"{{nuevoId}}\",\r\n    \"teamName\": \"{{$randomCountry}}\",\r\n    \"continentName\": \"{{federacionSeleccionada}}\",\r\n    \"rankingFifa\": \"{{rankingSeleccionado}}\",\r\n    \"worldCupGroup\": \"{{grupoSeleccionado}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/worldCup/createTeams",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "worldCup",
+                    "createTeams"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SmokeTesting",
+      "item": [
+        {
+          "name": "findTeamById",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/worldCup/teamsById/50",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "worldCup",
+                "teamsById",
+                "50"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createTeam",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// 1. Define tu lista de continentes (pueden ser strings u objetos JSON)\r",
+                  "const continentes = [\r",
+                  "    \"CAF\", \r",
+                  "    \"UEFA\", \r",
+                  "    \"CONMEBOL\", \r",
+                  "    \"CONCACAF\", \r",
+                  "    \"AFC\"\r",
+                  "];\r",
+                  "\r",
+                  "// 2. Utiliza Lodash para elegir un continente aleatoriamente de la lista\r",
+                  "const continenteAleatorio = _.sample(continentes);\r",
+                  "\r",
+                  "// 3. Guarda el resultado en una variable de ambiente o colección\r",
+                  "pm.environment.set(\"federacionSeleccionada\", continenteAleatorio);\r",
+                  "\r",
+                  "// 4. Define tu lista de rankings (pueden ser strings u objetos JSON)\r",
+                  "const ranking = [\r",
+                  "    20, 21, 22, 23, 24,\r",
+                  "    25, 26, 27, 28, 29,\r",
+                  "    30, 31, 32, 33, 34,\r",
+                  "    35, 36, 37, 38, 39,\r",
+                  "    40, 41, 42, 43, 44,\r",
+                  "    45, 46, 47, 48, 49\r",
+                  "];\r",
+                  "\r",
+                  "// 5. Utiliza Lodash para elegir un ranking aleatoriamente de la lista\r",
+                  "const rankingAleatorio = _.sample(ranking);\r",
+                  "\r",
+                  "// 6. Guarda el ranking en una variable de ambiente\r",
+                  "pm.environment.set(\"rankingSeleccionado\", rankingAleatorio);\r",
+                  "\r",
+                  "// 7. Define tu lista de grupos (pueden ser strings u objetos JSON)\r",
+                  "const grupos = [\r",
+                  "    \"L\", \"M\", \"N\", \"O\", \"P\",\r",
+                  "    \"Q\", \"R\", \"S\", \"T\", \"U\",\r",
+                  "    \"V\", \"W\", \"X\", \"Y\", \"Z\"\r",
+                  "];\r",
+                  "\r",
+                  "// 8. Utiliza Lodash para elegir un grupo aleatoriamente de la lista\r",
+                  "const gruposAleatorio = _.sample(grupos);\r",
+                  "\r",
+                  "// 9. Guarda el ranking en una variable de ambiente\r",
+                  "pm.environment.set(\"grupoSeleccionado\", gruposAleatorio);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": \"{{nuevoId}}\",\r\n    \"teamName\": \"{{$randomCountry}}\",\r\n    \"continentName\": \"{{federacionSeleccionada}}\",\r\n    \"rankingFifa\": \"{{rankingSeleccionado}}\",\r\n    \"worldCupGroup\": \"{{grupoSeleccionado}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/worldCup/createTeams",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "worldCup",
+                "createTeams"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "findAllTeams",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/worldCup/allTeams",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "worldCup",
+                "allTeams"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "ultimotId",
+      "value": ""
+    },
+    {
+      "key": "nuevoId",
+      "value": ""
+    }
+  ]
+}
